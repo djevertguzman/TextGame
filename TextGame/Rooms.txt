@@ -1,0 +1,7 @@
+0,Nothing,You should not be here,0,0,0,0
+1,Front Lawn,You are in the front lawn of your friends home.,2,0,0,0
+2,House,This is your friends house,3,0,1,0
+3,Backyard,This is the backyard of your friends house,6,5,2,4
+4,Cliff,A path from the backyard leads to a scenic cliff. Just don't look for too long.,0,3,0,0
+5,Forest,A path from the backyard leads you to a forest.,0,0,0,3
+6,River,Cutting through the backyard leads to a beautiful river.,0,0,3,0
