@@ -1,8 +1,6 @@
 package textGame;
-//import java.util.HashMap;
-import java.util.Map;
-
-//import com.sun.tools.javac.code.Attribute.Array;
+//import java.util.Map;
+import textGame.commonLib.*;
 
 public class Room {
 	int roomNumber;
@@ -10,21 +8,24 @@ public class Room {
 	String description;
 	boolean visited = false;
 	int N,E,S,W = 0;
-	Map<String, Integer> exits;
+	Inventory rmInv;
+	//Map<String, Integer> exits;
 	public Room(int roomNumber, String name, String description, int N, int E, int S, int W) {
 		this.roomNumber = roomNumber;
 		this.name = name;
 		this.description = description;
 		this.visited = false;
-		//this.exits = new HashMap<>();
 		this.N = N;
 		this.E = E;
 		this.S = S;
 		this.W = W;
+		rmInv = new Inventory(Integer.toString(roomNumber));
 	}
+	/*
 	public void addExit(String Direction, int roomNumber) {
 		exits.put(Direction, roomNumber);
 	}
+	*/
 	public String getRoomName() {
 		return name;
 	}
@@ -37,6 +38,9 @@ public class Room {
 	}
 	public boolean hasVisited() {
 		return visited;
+	}
+	public void exploreRoom() {
+		//edit this to load the room "inventory" ui when it that functions is ready.
 	}
 	
 }

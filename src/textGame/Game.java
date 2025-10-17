@@ -1,11 +1,13 @@
 package textGame;
 
 import java.util.ArrayList;
+import textGame.commonLib.*;
 import java.util.Arrays;
 //Main game logic will go here.
 
 public class Game {
 	static ArrayList<Room> Area = new ArrayList<Room>();
+	static ArrayList<Item> Item = new ArrayList<Item>();
 	private static int usrLOC = 1;
 	
 	public static void addRoom(Room x) {
