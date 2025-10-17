@@ -51,10 +51,13 @@ public class UserCLI {
 		}
 		
 	}
-	public static String exploreCLI(String currRm, Boolean Visit, String description) {
+	public static String navigationCLI(int usrLoc, String currRm, Boolean Visit, String description) {
 		String message = "";
 		if(Visit == true) {
 			message = "You have visited this room before.";
+		}
+		else if(Visit == false && usrLoc == 1){
+			message = "";
 		}
 		else {
 			message = "You do not reconize this place, You never been here before.";

@@ -15,8 +15,6 @@ public class Game {
 		//System.out.println(x.getRoomName() + ": Has been loaded into the game");
 	}
 	public static void newGame() {
-		//System.out.println("Printing the Room arraylist, until we have more to show.");
-		//System.out.println(Area);
 		System.out.println("You have been dropped off in front of your friends house, and you are unfamillar with this landscape.");
 		game();
 	}
@@ -28,10 +26,10 @@ public class Game {
 	private static void game() {
 		while(true) {
 			gps();
-			String direction = UserCLI.exploreCLI(Area.get(usrLOC).getRoomName(), Area.get(usrLOC).hasVisited(),Area.get(usrLOC).description);
-			Area.get(usrLOC).visit();
+			String direction = UserCLI.navigationCLI(usrLOC,Area.get(usrLOC).getRoomName(), Area.get(usrLOC).hasVisited(),Area.get(usrLOC).description);
 			//System.out.println("usrSel:" + direction);
 			updatePlayerLocation(direction);
+			Area.get(usrLOC).visit();
 			}
 		}
 	private static void gps() {

@@ -14,7 +14,6 @@ public class Room {
 		this.roomNumber = roomNumber;
 		this.name = name;
 		this.description = description;
-		this.visited = false;
 		this.N = N;
 		this.E = E;
 		this.S = S;
