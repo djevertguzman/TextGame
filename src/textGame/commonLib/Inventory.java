@@ -23,5 +23,18 @@ public class Inventory {
 	public int getItemCount() {
 		return storedItems.size();
 	}
+	public String printItemList() {
+		return storedItems.toString();
+	}
+	public boolean isEmpty() {
+		return storedItems.isEmpty();
+	}
+	public String prntList() {
+		String sendList = "";
+		for(Item I : storedItems) {
+			sendList = sendList + I.toString() + "\n";
+		}
+		return sendList;
+	}
 	
 }

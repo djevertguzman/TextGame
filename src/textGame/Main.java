@@ -13,6 +13,12 @@ public class Main {
 		
 		System.out.println("Game Start!");
 		FileIO.readMap();
+		Item oA = new Item("ch1","chicken");
+		Item oB = new Item("ch2","chicken2");
+		Item oC = new Item("ch3","chicken3");
+		Game.Area.get(1).rmInv.addToInv(oA);
+		Game.Area.get(1).rmInv.addToInv(oB);
+		Game.Area.get(1).rmInv.addToInv(oC);
 		UserCLI.mainmenu();
 		
 		/*

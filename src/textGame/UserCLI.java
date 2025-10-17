@@ -65,6 +65,8 @@ public class UserCLI {
 		while(true) {
 			drawMap();
 			System.out.println("------------------------------------------------------------------------------------------");
+			//TODO narrative parsing.
+			//System.out.println("Narrative: " + narrative() + ".");
 			System.out.println("Description: " + description);
 			System.out.println("You are currently in the " + currRm + ". " + message );
 			//System.out.println("------------------------------------------------------------------------------------------");
@@ -90,5 +92,25 @@ public class UserCLI {
 		System.out.println("      ----S----");
 		String[] rmName = Game.getNbrRoomName();
 		System.out.println("N: "+rmName[0]+" - E: "+rmName[1]+" - S: "+rmName[2]+" - W: "+rmName[3]);
+	}
+	public static void displayHelp() {
+		//TODO write out a help screen.
+		System.out.println("In the help menu we display a little informational menu, that gives the user basic commands that they can try.");
+		System.out.println("Future goals, make this help menu context aware.");
+	}
+	public static String narrative() {
+		//Future TODO not implemented
+		return "Not Implemented";
+	}
+	public static void exploreList(boolean isEmpty,String itemList) {
+		if(isEmpty != true) {
+		System.out.println("You explored the room, You have found.");
+		//TODO populate the list of items.
+		System.out.println(itemList);
+		System.out.println("You can pick them up using the pickup [name] command.");
+		}
+		else {
+			System.out.println("This room is empty");
+		}
 	}
 }

@@ -15,7 +15,7 @@ public class Game {
 		//System.out.println(x.getRoomName() + ": Has been loaded into the game");
 	}
 	public static void newGame() {
-		System.out.println("You have been dropped off in front of your friends house, and you are unfamillar with this landscape.");
+		//System.out.println("You have been dropped off in front of your friends house, and you are unfamillar with this landscape.");
 		game();
 	}
 	public static void continueGame() {
@@ -26,16 +26,16 @@ public class Game {
 	private static void game() {
 		while(true) {
 			gps();
-			String direction = UserCLI.navigationCLI(usrLOC,Area.get(usrLOC).getRoomName(), Area.get(usrLOC).hasVisited(),Area.get(usrLOC).description);
+			String usrCommand = UserCLI.navigationCLI(usrLOC,Area.get(usrLOC).getRoomName(), Area.get(usrLOC).hasVisited(),Area.get(usrLOC).description);
 			//System.out.println("usrSel:" + direction);
-			updatePlayerLocation(direction);
+			parseUSRInput(usrCommand);
 			Area.get(usrLOC).visit();
 			}
 		}
 	private static void gps() {
 		usrLOC = Player.currPlayerLocation();
 	}
-	private static void updatePlayerLocation(String D) {
+	private static void parseUSRInput(String D) {
 		//Player.updatePlayerLocation(usrLOC);
 		gps();
 		int nbrRoom[] = Area.get(usrLOC).getNeighbouringRooms();
@@ -76,6 +76,12 @@ public class Game {
 					System.out.println("There is nowhere to go, select another option.");
 				}
 				break;
+			case "explore":
+				explore();
+				break;
+			case "help":
+				UserCLI.displayHelp();
+				break;
 			case "exit":
 				//System.out.println("Branch 4");
 				System.out.println("See you next time, Goodbye.");
@@ -94,5 +100,9 @@ public class Game {
 		int[] temp = Area.get(usrLOC).getNeighbouringRooms();
 		String[] nbrName = {Area.get(temp[0]).getRoomName(),Area.get(temp[1]).getRoomName(),Area.get(temp[2]).getRoomName(),Area.get(temp[3]).getRoomName()};
 		return nbrName;
+	}
+	public static void explore() {
+		boolean isEmpty = Area.get(usrLOC).rmInv.isEmpty();
+		UserCLI.exploreList(isEmpty, Area.get(usrLOC).rmInv.prntList());
 	}
 }
