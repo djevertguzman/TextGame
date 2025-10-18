@@ -113,4 +113,10 @@ public class UserCLI {
 			System.out.println("This room is empty");
 		}
 	}
+	public static String pickup() {
+		System.out.println("What do you want to pickup?: ");
+		String usrSelection = usrkey.nextLine();
+		usrSelection = usrSelection.toLowerCase();
+		return usrSelection;
+	}
 }

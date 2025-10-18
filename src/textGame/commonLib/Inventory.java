@@ -36,5 +36,8 @@ public class Inventory {
 		}
 		return sendList;
 	}
+	public ArrayList<Item> getArrList() {
+		return storedItems;
+	}
 	
 }

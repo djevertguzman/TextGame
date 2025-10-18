@@ -3,6 +3,7 @@ package textGame;
 import java.util.ArrayList;
 import textGame.commonLib.*;
 import java.util.Arrays;
+import java.util.Iterator;
 //Main game logic will go here.
 
 public class Game {
@@ -79,6 +80,9 @@ public class Game {
 			case "explore":
 				explore();
 				break;
+			case "pickup":
+				pickup();
+				break;
 			case "help":
 				UserCLI.displayHelp();
 				break;
@@ -104,5 +108,23 @@ public class Game {
 	public static void explore() {
 		boolean isEmpty = Area.get(usrLOC).rmInv.isEmpty();
 		UserCLI.exploreList(isEmpty, Area.get(usrLOC).rmInv.prntList());
+	}
+	public static void pickup() {
+		String usrSelection = UserCLI.pickup();
+		int count = 0;
+		Iterator<Item> iter = Area.get(usrLOC).rmInv.getArrList().iterator();
+		while(iter.hasNext()) {
+			Item X = iter.next();
+			count += 1;
+			if(X.getName().toLowerCase().contains(usrSelection.toLowerCase())) {
+				Player.pInv().addToInv(X);
+				//Area.get(usrLOC).rmInv.removeFromInv(count);
+				iter.remove();
+				System.out.println("Item " + X.getName() + " has been picked up,\nand successfully added to the player inventory");
+			}
+			else {
+				System.out.println("There is no item named " + usrSelection + "in this Room.");
+			}
+		}
 	}
 }
