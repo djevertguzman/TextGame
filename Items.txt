@@ -1,0 +1,15 @@
+itm1~Chicken~A lovely little chicken~1
+itm2~Old Key~unlocks a something in this world.~2
+itm3~Mysterious Note~could be a cryptic clue.~2
+itm4~Lockpick Set~Might be useful for its intended purpose.~2
+itm5~Combination Lock~I wonder if this is to keep something in.~3
+itm6~Diary~A book containing your friends personal thoughts.~3
+itm7~Photograph~A photograph of your friends family.~3
+itm8~Newspaper~A newspaper dated years in the past.~4
+itm9~Blueprint~A blueprint of the house.~4
+itm10~Pocket Watch~ A pocketwatch that is still running. Why is is here?~4
+itm11~Painting~A painting on the wall, if my name was bender...~5
+itm12~Book~A well worn book that someone really loved to read.~5
+itm13~Flashlight~ A standard issue flashlight, really bright despite it's size.~5
+itm14~crowbar~ Just a crowbar, i hope i don't need to use it.~6
+itm15~Magnifying Glass~used to inspect fine details or reveal hidden markings.~6

@@ -122,6 +122,7 @@ public class Game {
 		String usrSelection = UserCLI.pickup();
 		int count = 0;
 		Iterator<Item> iter = Area.get(usrLOC).rmInv.getArrList().iterator();
+		Boolean anything = false;
 		while(iter.hasNext()) {
 			Item X = iter.next();
 			count += 1;
@@ -130,10 +131,11 @@ public class Game {
 				//Area.get(usrLOC).rmInv.removeFromInv(count);
 				iter.remove();
 				System.out.println("Item " + X.getName() + " has been picked up,\nand successfully added to the player inventory");
+				anything = true;
 			}
-			else {
-				System.out.println("There is no item named " + usrSelection + "in this Room.");
-			}
+		}
+		if(anything == false) {
+			System.out.println("There is no item named " + usrSelection + "in this Room.");
 		}
 	}
 	public static void playerInv() {
@@ -142,7 +144,7 @@ public class Game {
 		System.out.println(Player.playInv.prntList());
 		}
 		else {
-			System.out.println("There are no items in your inventory. \nTry picking some up.");
+			System.out.println("You haven't yet picked up any items.");
 		}
 	}
 	public static void itemInspect(){
