@@ -83,6 +83,15 @@ public class Game {
 			case "pickup":
 				pickup();
 				break;
+			case "inventory":
+				playerInv();
+				break;
+			case "inspect":
+				itemInspect();
+				break;
+			case "drop":
+				dropItem();
+				break;
 			case "help":
 				UserCLI.displayHelp();
 				break;
@@ -125,6 +134,51 @@ public class Game {
 			else {
 				System.out.println("There is no item named " + usrSelection + "in this Room.");
 			}
+		}
+	}
+	public static void playerInv() {
+		UserCLI.playerInv();
+		if(Player.playInv.getItemCount() != 0) {
+		System.out.println(Player.playInv.prntList());
+		}
+		else {
+			System.out.println("There are no items in your inventory. \nTry picking some up.");
+		}
+	}
+	public static void itemInspect(){
+		String chosenItem = UserCLI.playerItemInspect();
+		Iterator<Item> iter = Player.playInv.getArrList().iterator();
+		Boolean anything = false;
+		while(iter.hasNext()) {
+			Item X = iter.next();
+			if(X.getName().toLowerCase().contains(chosenItem.toLowerCase())) {
+				System.out.println(X.printNameDescription());
+				anything = true;
+			}
+		}
+		if(anything == false) {
+			System.out.println("This item was not found in your Inventory.\n are you sure you have picked it up?");
+		}
+	}
+	public static void dropItem() {
+		String usrSelection = UserCLI.drop();
+		int count = 0;
+		Iterator<Item> iter = Player.playInv.getArrList().iterator();
+		Boolean anything = false;
+		while(iter.hasNext()) {
+			Item X = iter.next();
+			count += 1;
+			if(X.getName().toLowerCase().contains(usrSelection.toLowerCase())) {
+				//Player.pInv().addToInv(X);
+				//Area.get(usrLOC).rmInv.removeFromInv(count);
+				Area.get(usrLOC).rmInv.addToInv(X);
+				iter.remove();
+				System.out.println("Item " + X.getName() + " has been dropped,\nand successfully placed in the: " + Area.get(usrLOC).name);
+				anything = true;
+			}
+		}
+		if(anything == false) {
+			System.out.println("There is no item named " + usrSelection + "in your Inventory.");
 		}
 	}
 }

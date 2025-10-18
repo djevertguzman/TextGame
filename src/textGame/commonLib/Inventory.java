@@ -18,7 +18,7 @@ public class Inventory {
 		storedItems.remove(I);
 	}
 	public String printInv() {
-		return invID + storedItems.toString();
+		return storedItems.toString();
 		}
 	public int getItemCount() {
 		return storedItems.size();

@@ -13,7 +13,10 @@ public class Item {
 	
 	@Override
 	public String toString() {
-		return itemID +" , " + Name + " , " + itemDescription;
+		return Name;
+	}
+	public String printNameDescription() {
+		return Name + " , " + itemDescription;
 	}
 	public String getID() {
 		return itemID;

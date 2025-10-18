@@ -107,7 +107,7 @@ public class UserCLI {
 		System.out.println("You explored the room, You have found.");
 		//TODO populate the list of items.
 		System.out.println(itemList);
-		System.out.println("You can pick them up using the pickup [name] command.");
+		System.out.println("You can pick them up using the pickup command.");
 		}
 		else {
 			System.out.println("This room is empty");
@@ -115,6 +115,21 @@ public class UserCLI {
 	}
 	public static String pickup() {
 		System.out.println("What do you want to pickup?: ");
+		String usrSelection = usrkey.nextLine();
+		usrSelection = usrSelection.toLowerCase();
+		return usrSelection;
+	}
+	public static void playerInv() {
+		return;
+	}
+	public static String playerItemInspect() {
+		System.out.println("What item do you want to inspect?");
+		String userItem = usrkey.nextLine();
+		userItem = userItem.toLowerCase();
+		return userItem;
+	}
+	public static String drop() {
+		System.out.println("What item do you want to drop?: ");
 		String usrSelection = usrkey.nextLine();
 		usrSelection = usrSelection.toLowerCase();
 		return usrSelection;
