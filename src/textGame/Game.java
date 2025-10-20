@@ -8,11 +8,16 @@ import java.util.Iterator;
 
 public class Game {
 	static ArrayList<Room> Area = new ArrayList<Room>();
-	static ArrayList<Item> Item = new ArrayList<Item>();
+	static ArrayList<Puzzle> Puzzles = new ArrayList<Puzzle>();
 	private static int usrLOC = 1;
+	private Boolean recFailPuzzle = false;
 	
 	public static void addRoom(Room x) {
 		Area.add(x);
+		//System.out.println(x.getRoomName() + ": Has been loaded into the game");
+	}
+	public static void addPuzzle(Puzzle x) {
+		Puzzles.add(x);
 		//System.out.println(x.getRoomName() + ": Has been loaded into the game");
 	}
 	public static void newGame() {
@@ -26,6 +31,7 @@ public class Game {
 	}
 	private static void game() {
 		while(true) {
+			checkForPuzzle();
 			gps();
 			String usrCommand = UserCLI.navigationCLI(usrLOC,Area.get(usrLOC).getRoomName(), Area.get(usrLOC).hasVisited(),Area.get(usrLOC).description);
 			//System.out.println("usrSel:" + direction);
@@ -37,7 +43,6 @@ public class Game {
 		usrLOC = Player.currPlayerLocation();
 	}
 	private static void parseUSRInput(String D) {
-		//Player.updatePlayerLocation(usrLOC);
 		gps();
 		int nbrRoom[] = Area.get(usrLOC).getNeighbouringRooms();
 		//System.out.println("nbrroom:" + Arrays.toString(nbrRoom));
@@ -45,6 +50,7 @@ public class Game {
 			case "n":
 				if(nbrRoom[0] != 0) {
 					Player.updatePlayerLocation(nbrRoom[0]);
+					gps();
 					//System.out.println("Branch 1");
 				}
 				else {
@@ -55,6 +61,7 @@ public class Game {
 			case "e":
 				if(nbrRoom[1] != 0) {
 					Player.updatePlayerLocation(nbrRoom[1]);
+					gps();
 					//System.out.println("Branch 2");
 				}
 				else {
@@ -64,6 +71,7 @@ public class Game {
 			case "s":
 				if(nbrRoom[2] != 0) {
 					Player.updatePlayerLocation(nbrRoom[2]);
+					gps();
 					//System.out.println("Branch 3");
 				}else {
 					System.out.println("There is nowhere to go, select another option.");
@@ -72,6 +80,7 @@ public class Game {
 			case "w":
 				if(nbrRoom[3] != 0) {
 					Player.updatePlayerLocation(nbrRoom[3]);
+					gps();
 					//System.out.println("Branch 3");
 				}else {
 					System.out.println("There is nowhere to go, select another option.");
@@ -182,5 +191,36 @@ public class Game {
 		if(anything == false) {
 			System.out.println("There is no item named " + usrSelection + "in your Inventory.");
 		}
+	}
+	public static void checkForPuzzle() {
+		System.out.println("In the checking puzzle method.");
+		Iterator<Puzzle> pIter = Puzzles.iterator();
+		while(pIter.hasNext()) {
+			Puzzle X = pIter.next();
+			if(X.getroomNum() == usrLOC && X.getCompletion() == false) {
+				playPuzzle(X);
+			}
+		}
+	}
+	public static void playPuzzle(Puzzle X) {
+		System.out.println(X.getQuestion());
+		Boolean corrAns = false;
+		int attempts = X.getAttempts();
+		while(corrAns == false && attempts != 0) {
+		String Answer = UserCLI.puzzle();
+		if(Answer.toLowerCase().contains(X.getAnswer().toLowerCase())) {
+			X.markComplete();
+			corrAns = true;
+			System.out.println("You have correctly solved the puzzle. \n You may proceed.");
+			return;
+		}
+		else {
+			attempts -= 1;
+			System.out.println("The answer you have provided is wrong, you still have " + attempts + " attempts. Try again.");
+		}
+		}
+		System.out.println("You have failed to solve the puzzle,\ncome back later.");
+		Player.updatePlayerLocation(usrLOC - 1);
+		gps();
 	}
 }

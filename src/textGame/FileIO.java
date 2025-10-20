@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import textGame.commonLib.Item;
+import textGame.commonLib.Puzzle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +81,44 @@ Map<String,Room> locations;
 		        		
 		        		);
 		        Game.Area.get(Integer.parseInt(itemAttributes.get(3))).rmInv.addToInv(temp);
+		        //System.out.println("Line Division");
+		        //Aright We can read the file, but we have not parsed it yet.
+		      }
+		      lineReader.close();
+		    } catch (FileNotFoundException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+	}
+	public static void readPuzzle() {
+		try {
+		      File roomFile = new File("Puzzles.txt");
+		      Scanner lineReader = new Scanner(roomFile);
+		      //Splitting file by line.
+		      while (lineReader.hasNextLine()) {
+		        String data = lineReader.nextLine();
+		        //System.out.println(data);
+		      //Splitting file by delimiter, also adding those tokens to an arraylist.
+		        Scanner puzzleParser = new Scanner(data);
+		        puzzleParser.useDelimiter("~");
+		        ArrayList<String> puzzleAttributes = new ArrayList<String>(); 
+		        while(puzzleParser.hasNext()) {
+		        	//System.out.println(roomParser.next());
+		        	puzzleAttributes.add(puzzleParser.next());
+		        	//System.out.println("Delim Division");
+		        }
+		        puzzleParser.close();
+		        //System.out.println(roomAttributes);
+		        //Room newROOM = new Room();
+		        Puzzle temp = new Puzzle(
+		        		puzzleAttributes.get(0),
+		        		puzzleAttributes.get(1),
+		        		puzzleAttributes.get(2),
+		        		puzzleAttributes.get(3),
+		        		Integer.parseInt(puzzleAttributes.get(4)),
+		        		Integer.parseInt(puzzleAttributes.get(5))
+		        		);
+		        Game.addPuzzle(temp);
 		        //System.out.println("Line Division");
 		        //Aright We can read the file, but we have not parsed it yet.
 		      }

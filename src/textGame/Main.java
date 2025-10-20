@@ -14,6 +14,7 @@ public class Main {
 		System.out.println("Game Start!");
 		FileIO.readMap();
 		FileIO.readItems();
+		FileIO.readPuzzle();
 		//Item oA = new Item("ch1","chicken","a wee little chicken1");
 		//Item oB = new Item("ch2","chicken2","a wee little chicken2");
 		//Item oC = new Item("ch3","chicken3","a wee little chicken3");

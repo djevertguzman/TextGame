@@ -134,4 +134,9 @@ public class UserCLI {
 		usrSelection = usrSelection.toLowerCase();
 		return usrSelection;
 	}
+	public static String puzzle() {
+		String usrAnswer = usrkey.nextLine();
+		usrAnswer = usrAnswer.toLowerCase();
+		return usrAnswer;
+	}
 }
