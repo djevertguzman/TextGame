@@ -10,7 +10,6 @@ public class Game {
 	static ArrayList<Room> Area = new ArrayList<Room>();
 	static ArrayList<Puzzle> Puzzles = new ArrayList<Puzzle>();
 	private static int usrLOC = 1;
-	private Boolean recFailPuzzle = false;
 	
 	public static void addRoom(Room x) {
 		Area.add(x);
