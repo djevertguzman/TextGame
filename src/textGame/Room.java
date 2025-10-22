@@ -38,8 +38,5 @@ public class Room {
 	public boolean hasVisited() {
 		return visited;
 	}
-	public void exploreRoom() {
-		//edit this to load the room "inventory" ui when it that functions is ready.
-	}
 	
 }

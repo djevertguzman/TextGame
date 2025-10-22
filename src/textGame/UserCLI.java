@@ -72,6 +72,7 @@ public class UserCLI {
 			//System.out.println("------------------------------------------------------------------------------------------");
 			System.out.print("Which way would you like to go? []: ");
 			String usesel = usrkey.nextLine();
+			System.out.println("------------------------------------------------------------------------------------------");
 			return usesel;
 			//usrMainOption(usesel.toLowerCase());
 			}

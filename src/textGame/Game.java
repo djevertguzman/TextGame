@@ -192,7 +192,7 @@ public class Game {
 		}
 	}
 	public static void checkForPuzzle() {
-		System.out.println("In the checking puzzle method.");
+		//System.out.println("In the checking puzzle method.");
 		Iterator<Puzzle> pIter = Puzzles.iterator();
 		while(pIter.hasNext()) {
 			Puzzle X = pIter.next();
