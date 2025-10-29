@@ -11,7 +11,7 @@ public class Main {
 		 * Comment them out to prevent the UI from loading.
 		 */
 		
-		System.out.println("Game Start!");
+		System.out.println("Game Start! Version - #0.0.2");
 		FileIO.readMap();
 		FileIO.readItems();
 		FileIO.readPuzzle();
@@ -21,7 +21,6 @@ public class Main {
 		//Game.Area.get(1).rmInv.addToInv(oA);
 		//Game.Area.get(1).rmInv.addToInv(oB);
 		//Game.Area.get(1).rmInv.addToInv(oC);
-		UserCLI.mainmenu();
 		
 		/*
 		 * After this line is where debug, or testing lines occur.
@@ -41,5 +40,9 @@ public class Main {
 		//Room chicken = new Room(1,"Chicken Coop","Welcome to the chicken coop.", 0, 0, 0, 0);
 		//Game.addRoom(chicken);
 		//System.out.println("builtRooms:" + chicken);
+		/*
+		 * Finally Start the User Interface
+		 */
+		UserCLI.mainmenu();
 	}
 }
