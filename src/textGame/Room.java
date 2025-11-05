@@ -20,11 +20,6 @@ public class Room {
 		this.W = W;
 		rmInv = new Inventory(Integer.toString(roomNumber));
 	}
-	/*
-	public void addExit(String Direction, int roomNumber) {
-		exits.put(Direction, roomNumber);
-	}
-	*/
 	public String getRoomName() {
 		return name;
 	}

@@ -39,6 +39,7 @@ public class Game {
 	public static int[] getNeighbouringRooms() {
 		return Area.get(Player.currPlayerLocation()).getNeighbouringRooms();
 	}
+	//See about reworking this later, to make room host and generate it's own Neighboring Array.
 	public static String[] getNbrRoomName() {
 		int[] temp = Area.get(Player.currPlayerLocation()).getNeighbouringRooms();
 		String[] nbrName = {Area.get(temp[0]).getRoomName(),Area.get(temp[1]).getRoomName(),Area.get(temp[2]).getRoomName(),Area.get(temp[3]).getRoomName()};
