@@ -2,6 +2,7 @@ package textGame;
 
 import textGame.commonLib.Inventory;
 import textGame.commonLib.Item;
+import userInterface.View;
 
 public class Main {
 	public static void main(String[] args) {
@@ -43,6 +44,6 @@ public class Main {
 		/*
 		 * Finally Start the User Interface
 		 */
-		UserCLI.mainmenu();
+		View.mainmenu();
 	}
 }

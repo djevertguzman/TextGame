@@ -2,6 +2,9 @@ package textGame;
 
 import java.util.ArrayList;
 import textGame.commonLib.*;
+import userInterface.Controller;
+import userInterface.View;
+
 import java.util.Iterator;
 //Main game logic will go here.
 
@@ -28,77 +31,13 @@ public class Game {
 	private static void game() {
 		while(true) {
 			checkForPuzzle();
-			String usrCommand = UserCLI.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
-			parseUSRInput(usrCommand);
+			String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
+			Controller.parseUSRInput(usrCommand);
 			Area.get(Player.currPlayerLocation()).visit();
 			}
 		}
-	//Got rid of GPS() function.
-	private static void parseUSRInput(String D) {
-		int nbrRoom[] = Area.get(Player.currPlayerLocation()).getNeighbouringRooms();
-			switch(D.toLowerCase()){
-			case "n":
-				if(nbrRoom[0] != 0) {
-					Player.updatePlayerLocation(nbrRoom[0]);
-				}
-				else {
-					System.out.println("There is nowhere to go, select another option.");
-				}
-				break;
-				
-			case "e":
-				if(nbrRoom[1] != 0) {
-					Player.updatePlayerLocation(nbrRoom[1]);
-					//System.out.println("Branch 2");
-				}
-				else {
-					System.out.println("There is nowhere to go, select another option.");
-				}
-				break;
-			case "s":
-				if(nbrRoom[2] != 0) {
-					Player.updatePlayerLocation(nbrRoom[2]);
-					//System.out.println("Branch 3");
-				}else {
-					System.out.println("There is nowhere to go, select another option.");
-				}
-				break;
-			case "w":
-				if(nbrRoom[3] != 0) {
-					Player.updatePlayerLocation(nbrRoom[3]);
-					//System.out.println("Branch 3");
-				}else {
-					System.out.println("There is nowhere to go, select another option.");
-				}
-				break;
-			case "explore":
-				explore();
-				break;
-			case "pickup":
-				pickup();
-				break;
-			case "inventory":
-				playerInv();
-				break;
-			case "inspect":
-				itemInspect();
-				break;
-			case "drop":
-				dropItem();
-				break;
-			case "help":
-				UserCLI.displayHelp();
-				break;
-			case "exit":
-				System.out.println("See you next time, Goodbye.");
-				System.exit(0);
-			case "":
-				System.out.println("Make sure to select an option.");
-				break;
-			default:
-				System.out.println("There is nowhere to go, select another option.");
-				break;
-			}
+	public static int[] getNeighbouringRooms() {
+		return Area.get(Player.currPlayerLocation()).getNeighbouringRooms();
 	}
 	public static String[] getNbrRoomName() {
 		int[] temp = Area.get(Player.currPlayerLocation()).getNeighbouringRooms();
@@ -107,10 +46,10 @@ public class Game {
 	}
 	public static void explore() {
 		boolean isEmpty = Area.get(Player.currPlayerLocation()).rmInv.isEmpty();
-		UserCLI.exploreList(isEmpty, Area.get(Player.currPlayerLocation()).rmInv.prntList());
+		View.exploreList(isEmpty, Area.get(Player.currPlayerLocation()).rmInv.prntList());
 	}
 	public static void pickup() {
-		String usrSelection = UserCLI.pickup();
+		String usrSelection = View.pickup();
 		int count = 0;
 		Iterator<Item> iter = Area.get(Player.currPlayerLocation()).rmInv.getArrList().iterator();
 		Boolean anything = false;
@@ -129,7 +68,7 @@ public class Game {
 		}
 	}
 	public static void playerInv() {
-		UserCLI.playerInv();
+		View.playerInv();
 		if(Player.playInv.getItemCount() != 0) {
 		System.out.println(Player.playInv.prntList());
 		}
@@ -138,7 +77,7 @@ public class Game {
 		}
 	}
 	public static void itemInspect(){
-		String chosenItem = UserCLI.playerItemInspect();
+		String chosenItem = View.playerItemInspect();
 		Iterator<Item> iter = Player.playInv.getArrList().iterator();
 		Boolean anything = false;
 		while(iter.hasNext()) {
@@ -153,7 +92,7 @@ public class Game {
 		}
 	}
 	public static void dropItem() {
-		String usrSelection = UserCLI.drop();
+		String usrSelection = View.drop();
 		int count = 0;
 		Iterator<Item> iter = Player.playInv.getArrList().iterator();
 		Boolean anything = false;
@@ -185,7 +124,7 @@ public class Game {
 		Boolean corrAns = false;
 		int attempts = X.getAttempts();
 		while(corrAns == false && attempts != 0) {
-		String Answer = UserCLI.puzzle();
+		String Answer = View.puzzle();
 		if(Answer.toLowerCase().contains(X.getAnswer().toLowerCase())) {
 			X.markComplete();
 			corrAns = true;

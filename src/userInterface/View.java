@@ -1,7 +1,9 @@
-package textGame;
-import java.util.Scanner;
+package userInterface;
 
-public class UserCLI {
+import java.util.Scanner;
+import textGame.Game;
+
+public class View {
 	static Scanner usrkey = new Scanner(System.in);
 	public static void mainmenu() {
 		//Scanner usrkey = new Scanner(System.in);
