@@ -116,26 +116,8 @@ public class View {
 			System.out.println("This room is empty");
 		}
 	}
-	public static String pickup() {
-		System.out.println("What do you want to pickup?: ");
-		String usrSelection = usrkey.nextLine();
-		usrSelection = usrSelection.toLowerCase();
-		return usrSelection;
-	}
 	public static void playerInv() {
 		return;
-	}
-	public static String playerItemInspect() {
-		System.out.println("What item do you want to inspect?");
-		String userItem = usrkey.nextLine();
-		userItem = userItem.toLowerCase();
-		return userItem;
-	}
-	public static String drop() {
-		System.out.println("What item do you want to drop?: ");
-		String usrSelection = usrkey.nextLine();
-		usrSelection = usrSelection.toLowerCase();
-		return usrSelection;
 	}
 	public static String puzzle() {
 		String usrAnswer = usrkey.nextLine();

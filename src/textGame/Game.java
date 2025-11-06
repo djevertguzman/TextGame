@@ -32,7 +32,8 @@ public class Game {
 		while(true) {
 			checkForPuzzle();
 			String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
-			Controller.parseUSRInput(usrCommand);
+			//Controller.parseUSRInput(usrCommand);
+			Controller.singleStepParse(usrCommand);
 			Area.get(Player.currPlayerLocation()).visit();
 			}
 		}
@@ -49,8 +50,8 @@ public class Game {
 		boolean isEmpty = Area.get(Player.currPlayerLocation()).rmInv.isEmpty();
 		View.exploreList(isEmpty, Area.get(Player.currPlayerLocation()).rmInv.prntList());
 	}
-	public static void pickup() {
-		String usrSelection = View.pickup();
+	public static void pickup(String usrSelection) {
+		//String usrSelection = View.pickup();
 		int count = 0;
 		Iterator<Item> iter = Area.get(Player.currPlayerLocation()).rmInv.getArrList().iterator();
 		Boolean anything = false;
@@ -77,8 +78,8 @@ public class Game {
 			System.out.println("You haven't yet picked up any items.");
 		}
 	}
-	public static void itemInspect(){
-		String chosenItem = View.playerItemInspect();
+	public static void itemInspect(String chosenItem){
+		chosenItem = chosenItem.toLowerCase();
 		Iterator<Item> iter = Player.playInv.getArrList().iterator();
 		Boolean anything = false;
 		while(iter.hasNext()) {
@@ -92,8 +93,8 @@ public class Game {
 			System.out.println("This item was not found in your Inventory.\n are you sure you have picked it up?");
 		}
 	}
-	public static void dropItem() {
-		String usrSelection = View.drop();
+	public static void dropItem(String usrSelection) {
+		usrSelection = usrSelection.toLowerCase();
 		int count = 0;
 		Iterator<Item> iter = Player.playInv.getArrList().iterator();
 		Boolean anything = false;
