@@ -69,7 +69,7 @@ public class Game {
 			System.out.println("There is no item named " + usrSelection + "in this Room.");
 		}
 	}
-	public static void playerInv() {
+	/*public static void playerInv() {
 		View.playerInv();
 		if(Player.playInv.getItemCount() != 0) {
 		System.out.println(Player.playInv.prntList());
@@ -78,7 +78,8 @@ public class Game {
 			System.out.println("You haven't yet picked up any items.");
 		}
 	}
-	public static void itemInspect(String chosenItem){
+	*/
+	/*public static void itemInspect(String chosenItem){
 		chosenItem = chosenItem.toLowerCase();
 		Iterator<Item> iter = Player.playInv.getArrList().iterator();
 		Boolean anything = false;
@@ -93,6 +94,7 @@ public class Game {
 			System.out.println("This item was not found in your Inventory.\n are you sure you have picked it up?");
 		}
 	}
+	*/
 	public static void dropItem(String usrSelection) {
 		usrSelection = usrSelection.toLowerCase();
 		int count = 0;

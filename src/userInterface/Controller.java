@@ -4,7 +4,9 @@ import textGame.Game;
 import textGame.Player;
 
 public class Controller {
-	public static void parseUSRInput(String D) {
+	/*
+	 * Left in for reference, dead path to be removed.
+	 public static void parseUSRInput(String D) {
 		int nbrRoom[] = Game.getNeighbouringRooms();
 			switch(D.toLowerCase()){
 			case "n":
@@ -71,6 +73,7 @@ public class Controller {
 			}
 			
 	}
+	*/
 	public static void singleStepParse(String usrString) {
 		int nbrRoom[] = Game.getNeighbouringRooms();
 		usrString = usrString.toLowerCase();
@@ -121,13 +124,13 @@ public class Controller {
 			}
 			break;
 		case "inventory":
-			Game.playerInv();
+			Player.playerInv();
 			break;
 		case "inspect":
 			if(commandSplit.length == 1) {
 				System.out.println("Command argument required: Try Again");
 			}else {
-				Game.itemInspect(commandSplit[1]);
+				Player.itemInspect(commandSplit[1]);
 			}
 			break;
 		case "drop":
@@ -136,6 +139,32 @@ public class Controller {
 			}else {
 				Game.dropItem(commandSplit[1]);
 			}
+			break;
+		case "equip":
+			if(commandSplit.length == 1) {
+				System.out.println("Command argument required: Try Again");
+			}else {
+				Player.equipItem(commandSplit[1]);
+			}
+			break;
+		case "unequip":
+			Player.unequipItem();
+			break;
+		case "checkequip":
+			Player.checkequip();
+			break;
+		case "checkhp":
+			Player.checkHP();
+			break;
+		case "heal":
+			if(commandSplit.length == 1) {
+				System.out.println("Command argument required: Try Again");
+			}else {
+				Player.itemHeal(commandSplit[1]);
+			}
+			break;
+		case "checkattack":
+			System.out.println("Player's Currrent Attack Power: " + Player.getCurrAttk());
 			break;
 		case "help":
 			View.displayHelp();

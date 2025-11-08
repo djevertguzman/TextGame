@@ -1,7 +1,9 @@
 package textGame;
 
+import textGame.commonLib.Consumable;
 import textGame.commonLib.Inventory;
 import textGame.commonLib.Item;
+import textGame.commonLib.Weapon;
 import userInterface.View;
 
 public class Main {
@@ -16,6 +18,10 @@ public class Main {
 		FileIO.readMap();
 		FileIO.readItems();
 		FileIO.readPuzzle();
+		Consumable x = new Consumable("testconsume", "Apple", "Small apple doesnt add much but better then nothing.",5);
+		Player.playInv.addToInv(x);
+		Weapon Y = new Weapon("testWeapon","Gun","Small Gun a bit powerful",100);
+		Player.playInv.addToInv(Y);
 		
 		/*
 		 * After this line is where debug, or testing lines occur.
