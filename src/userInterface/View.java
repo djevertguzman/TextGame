@@ -1,5 +1,4 @@
 package userInterface;
-
 import java.util.Scanner;
 import textGame.Game;
 
@@ -123,5 +122,8 @@ public class View {
 		String usrAnswer = usrkey.nextLine();
 		usrAnswer = usrAnswer.toLowerCase();
 		return usrAnswer;
+	}
+	public static void CombatCLI() {
+		System.out.println("In Combat UI.");
 	}
 }

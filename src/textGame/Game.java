@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import textGame.commonLib.*;
 import userInterface.Controller;
 import userInterface.View;
+import userInterface.newView;
 
 import java.util.Iterator;
 //Main game logic will go here.
@@ -31,12 +32,28 @@ public class Game {
 	private static void game() {
 		while(true) {
 			checkForPuzzle();
-			String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
-			//Controller.parseUSRInput(usrCommand);
-			Controller.singleStepParse(usrCommand);
-			Area.get(Player.currPlayerLocation()).visit();
+			if(checkForMobs()) {
+				//String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
+				//String usrCommand = View.CombatCLI();
+				//View.CombatCLI();
+				//Controller.parseUSRInput(usrCommand);
+				//Controller.singleStepParse(usrCommand);
+				newView.setView(4);
+				newView.draw();
+				Controller.singleStepParse(3);
+				Area.get(Player.currPlayerLocation()).visit();
+			}
+			else {
+				//String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
+				//Controller.parseUSRInput(usrCommand);
+				Controller.singleStepParse(1);
+				Area.get(Player.currPlayerLocation()).visit();
+			}
 			}
 		}
+	public static ArrayList<Room> getRoomList(){
+		return Area;
+	}
 	public static int[] getNeighbouringRooms() {
 		return Area.get(Player.currPlayerLocation()).getNeighbouringRooms();
 	}
@@ -69,32 +86,7 @@ public class Game {
 			System.out.println("There is no item named " + usrSelection + "in this Room.");
 		}
 	}
-	/*public static void playerInv() {
-		View.playerInv();
-		if(Player.playInv.getItemCount() != 0) {
-		System.out.println(Player.playInv.prntList());
-		}
-		else {
-			System.out.println("You haven't yet picked up any items.");
-		}
-	}
-	*/
-	/*public static void itemInspect(String chosenItem){
-		chosenItem = chosenItem.toLowerCase();
-		Iterator<Item> iter = Player.playInv.getArrList().iterator();
-		Boolean anything = false;
-		while(iter.hasNext()) {
-			Item X = iter.next();
-			if(X.getName().toLowerCase().contains(chosenItem.toLowerCase())) {
-				System.out.println(X.printNameDescription());
-				anything = true;
-			}
-		}
-		if(anything == false) {
-			System.out.println("This item was not found in your Inventory.\n are you sure you have picked it up?");
-		}
-	}
-	*/
+	
 	public static void dropItem(String usrSelection) {
 		usrSelection = usrSelection.toLowerCase();
 		int count = 0;
@@ -142,5 +134,19 @@ public class Game {
 		}
 		System.out.println("You have failed to solve the puzzle,\ncome back later.");
 		Player.updatePlayerLocation(Player.currPlayerLocation() - 1);
+	}
+	public static Boolean checkForMobs() {
+		Boolean mobPresent = !Area.get(Player.currPlayerLocation()).Mobs.isEmpty();
+		System.out.println("Is the array empty?" + !mobPresent);
+		return mobPresent;
+	}
+	public static void Combat() {
+		ArrayList<Entity> MobsList = Area.get(Player.currPlayerLocation()).Mobs;
+		Iterator<Entity> mobIter = MobsList.iterator();
+		System.out.println("List of Mobs");
+		while(mobIter.hasNext()) {
+			Entity X = mobIter.next();
+			System.out.println("Mob: " + X.getName());
+		}
 	}
 }

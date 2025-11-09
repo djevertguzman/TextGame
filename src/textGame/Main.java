@@ -1,10 +1,12 @@
 package textGame;
-
 import textGame.commonLib.Consumable;
 import textGame.commonLib.Inventory;
 import textGame.commonLib.Item;
+import textGame.commonLib.Monster;
 import textGame.commonLib.Weapon;
 import userInterface.View;
+import userInterface.newView;
+import userInterface.Controller;
 
 public class Main {
 	public static void main(String[] args) {
@@ -22,6 +24,8 @@ public class Main {
 		Player.playInv.addToInv(x);
 		Weapon Y = new Weapon("testWeapon","Gun","Small Gun a bit powerful",100);
 		Player.playInv.addToInv(Y);
+		Monster Z = new Monster(1,"Zombie","Decrepit Zombie","Your not sure who it was, but now it's a zombie",100,10);
+		Game.Area.get(1).addMob(Z);
 		
 		/*
 		 * After this line is where debug, or testing lines occur.
@@ -44,6 +48,9 @@ public class Main {
 		/*
 		 * Finally Start the User Interface
 		 */
-		View.mainmenu();
+		//View.mainmenu();
+		newView.setView(0);
+		newView.draw();
+		Controller.singleStepParse(0);
 	}
 }
