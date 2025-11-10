@@ -1,7 +1,12 @@
 package textGame;
-
+import textGame.commonLib.Consumable;
 import textGame.commonLib.Inventory;
 import textGame.commonLib.Item;
+import textGame.commonLib.Monster;
+import textGame.commonLib.Weapon;
+import userInterface.View;
+import userInterface.newView;
+import userInterface.Controller;
 
 public class Main {
 	public static void main(String[] args) {
@@ -15,12 +20,13 @@ public class Main {
 		FileIO.readMap();
 		FileIO.readItems();
 		FileIO.readPuzzle();
-		//Item oA = new Item("ch1","chicken","a wee little chicken1");
-		//Item oB = new Item("ch2","chicken2","a wee little chicken2");
-		//Item oC = new Item("ch3","chicken3","a wee little chicken3");
-		//Game.Area.get(1).rmInv.addToInv(oA);
-		//Game.Area.get(1).rmInv.addToInv(oB);
-		//Game.Area.get(1).rmInv.addToInv(oC);
+		Consumable x = new Consumable("testconsume", "Apple", "Small apple doesnt add much but better then nothing.",5);
+		Player.playInv.addToInv(x);
+		Weapon Y = new Weapon("testWeapon","Gun","Small Gun a bit powerful",25);
+		Player.playInv.addToInv(Y);
+		Monster Z = new Monster(1,"Zombie","Decrepit Zombie","Your not sure who it was, but now it's a zombie",100,10);
+		System.out.println(Z.getDescription());
+		Game.Area.get(2).addMob(Z);
 		
 		/*
 		 * After this line is where debug, or testing lines occur.
@@ -43,6 +49,9 @@ public class Main {
 		/*
 		 * Finally Start the User Interface
 		 */
-		UserCLI.mainmenu();
+		//View.mainmenu();
+		newView.setView(0);
+		newView.draw();
+		Controller.singleStepParse(0);
 	}
 }

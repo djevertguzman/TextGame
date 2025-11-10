@@ -2,14 +2,19 @@ package textGame;
 
 import java.util.ArrayList;
 import textGame.commonLib.*;
-import java.util.Arrays;
+import userInterface.Controller;
+import userInterface.View;
+import userInterface.newView;
+
 import java.util.Iterator;
 //Main game logic will go here.
 
 public class Game {
 	static ArrayList<Room> Area = new ArrayList<Room>();
 	static ArrayList<Puzzle> Puzzles = new ArrayList<Puzzle>();
-	private static int usrLOC = 1;
+	static Combat fight;
+	static boolean skipFight = false;
+	static boolean fightOver = false;
 	
 	public static void addRoom(Room x) {
 		Area.add(x);
@@ -20,7 +25,6 @@ public class Game {
 		//System.out.println(x.getRoomName() + ": Has been loaded into the game");
 	}
 	public static void newGame() {
-		//System.out.println("You have been dropped off in front of your friends house, and you are unfamillar with this landscape.");
 		game();
 	}
 	public static void continueGame() {
@@ -31,112 +35,49 @@ public class Game {
 	private static void game() {
 		while(true) {
 			checkForPuzzle();
-			gps();
-			String usrCommand = UserCLI.navigationCLI(usrLOC,Area.get(usrLOC).getRoomName(), Area.get(usrLOC).hasVisited(),Area.get(usrLOC).description);
-			//System.out.println("usrSel:" + direction);
-			parseUSRInput(usrCommand);
-			Area.get(usrLOC).visit();
+			if(!skipFight) {
+				//System.out.println("Loop 1");
+				if(checkForMobs()) {
+					//System.out.println("Loop 2");
+					Combat();
+					//System.out.println("After Combat Returns");
+				}
+			}
+				//String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
+				//Controller.parseUSRInput(usrCommand);
+				skipFight = false;
+				newView.setView(1);
+				newView.draw();
+				Controller.singleStepParse(1);
+				Area.get(Player.currPlayerLocation()).visit();
 			}
 		}
-	private static void gps() {
-		usrLOC = Player.currPlayerLocation();
+	public static ArrayList<Room> getRoomList(){
+		return Area;
 	}
-	private static void parseUSRInput(String D) {
-		gps();
-		int nbrRoom[] = Area.get(usrLOC).getNeighbouringRooms();
-		//System.out.println("nbrroom:" + Arrays.toString(nbrRoom));
-			switch(D.toLowerCase()){
-			case "n":
-				if(nbrRoom[0] != 0) {
-					Player.updatePlayerLocation(nbrRoom[0]);
-					gps();
-					//System.out.println("Branch 1");
-				}
-				else {
-					System.out.println("There is nowhere to go, select another option.");
-				}
-				break;
-				
-			case "e":
-				if(nbrRoom[1] != 0) {
-					Player.updatePlayerLocation(nbrRoom[1]);
-					gps();
-					//System.out.println("Branch 2");
-				}
-				else {
-					System.out.println("There is nowhere to go, select another option.");
-				}
-				break;
-			case "s":
-				if(nbrRoom[2] != 0) {
-					Player.updatePlayerLocation(nbrRoom[2]);
-					gps();
-					//System.out.println("Branch 3");
-				}else {
-					System.out.println("There is nowhere to go, select another option.");
-				}
-				break;
-			case "w":
-				if(nbrRoom[3] != 0) {
-					Player.updatePlayerLocation(nbrRoom[3]);
-					gps();
-					//System.out.println("Branch 3");
-				}else {
-					System.out.println("There is nowhere to go, select another option.");
-				}
-				break;
-			case "explore":
-				explore();
-				break;
-			case "pickup":
-				pickup();
-				break;
-			case "inventory":
-				playerInv();
-				break;
-			case "inspect":
-				itemInspect();
-				break;
-			case "drop":
-				dropItem();
-				break;
-			case "help":
-				UserCLI.displayHelp();
-				break;
-			case "exit":
-				//System.out.println("Branch 4");
-				System.out.println("See you next time, Goodbye.");
-				System.exit(0);
-			case "":
-				System.out.println("Make sure to select an option.");
-				//System.out.println("Branch 5");
-				break;
-			default:
-				System.out.println("There is nowhere to go, select another option.");
-				//System.out.println("Branch 6");
-				break;
-			}
+	public static int[] getNeighbouringRooms() {
+		return Area.get(Player.currPlayerLocation()).getNeighbouringRooms();
 	}
+	//See about reworking this later, to make room host and generate it's own Neighboring Array.
 	public static String[] getNbrRoomName() {
-		int[] temp = Area.get(usrLOC).getNeighbouringRooms();
+		int[] temp = Area.get(Player.currPlayerLocation()).getNeighbouringRooms();
 		String[] nbrName = {Area.get(temp[0]).getRoomName(),Area.get(temp[1]).getRoomName(),Area.get(temp[2]).getRoomName(),Area.get(temp[3]).getRoomName()};
 		return nbrName;
 	}
 	public static void explore() {
-		boolean isEmpty = Area.get(usrLOC).rmInv.isEmpty();
-		UserCLI.exploreList(isEmpty, Area.get(usrLOC).rmInv.prntList());
+		boolean isEmpty = Area.get(Player.currPlayerLocation()).rmInv.isEmpty();
+		View.exploreList(isEmpty, Area.get(Player.currPlayerLocation()).rmInv.prntList());
 	}
-	public static void pickup() {
-		String usrSelection = UserCLI.pickup();
+	public static void pickup(String usrSelection) {
+		//String usrSelection = View.pickup();
 		int count = 0;
-		Iterator<Item> iter = Area.get(usrLOC).rmInv.getArrList().iterator();
+		Iterator<Item> iter = Area.get(Player.currPlayerLocation()).rmInv.getArrList().iterator();
 		Boolean anything = false;
 		while(iter.hasNext()) {
 			Item X = iter.next();
 			count += 1;
 			if(X.getName().toLowerCase().contains(usrSelection.toLowerCase())) {
 				Player.pInv().addToInv(X);
-				//Area.get(usrLOC).rmInv.removeFromInv(count);
 				iter.remove();
 				System.out.println("Item " + X.getName() + " has been picked up,\nand successfully added to the player inventory");
 				anything = true;
@@ -146,32 +87,9 @@ public class Game {
 			System.out.println("There is no item named " + usrSelection + "in this Room.");
 		}
 	}
-	public static void playerInv() {
-		UserCLI.playerInv();
-		if(Player.playInv.getItemCount() != 0) {
-		System.out.println(Player.playInv.prntList());
-		}
-		else {
-			System.out.println("You haven't yet picked up any items.");
-		}
-	}
-	public static void itemInspect(){
-		String chosenItem = UserCLI.playerItemInspect();
-		Iterator<Item> iter = Player.playInv.getArrList().iterator();
-		Boolean anything = false;
-		while(iter.hasNext()) {
-			Item X = iter.next();
-			if(X.getName().toLowerCase().contains(chosenItem.toLowerCase())) {
-				System.out.println(X.printNameDescription());
-				anything = true;
-			}
-		}
-		if(anything == false) {
-			System.out.println("This item was not found in your Inventory.\n are you sure you have picked it up?");
-		}
-	}
-	public static void dropItem() {
-		String usrSelection = UserCLI.drop();
+	
+	public static void dropItem(String usrSelection) {
+		usrSelection = usrSelection.toLowerCase();
 		int count = 0;
 		Iterator<Item> iter = Player.playInv.getArrList().iterator();
 		Boolean anything = false;
@@ -179,11 +97,9 @@ public class Game {
 			Item X = iter.next();
 			count += 1;
 			if(X.getName().toLowerCase().contains(usrSelection.toLowerCase())) {
-				//Player.pInv().addToInv(X);
-				//Area.get(usrLOC).rmInv.removeFromInv(count);
-				Area.get(usrLOC).rmInv.addToInv(X);
+				Area.get(Player.currPlayerLocation()).rmInv.addToInv(X);
 				iter.remove();
-				System.out.println("Item " + X.getName() + " has been dropped,\nand successfully placed in the: " + Area.get(usrLOC).name);
+				System.out.println("Item " + X.getName() + " has been dropped,\nand successfully placed in the: " + Area.get(Player.currPlayerLocation()).name);
 				anything = true;
 			}
 		}
@@ -192,11 +108,10 @@ public class Game {
 		}
 	}
 	public static void checkForPuzzle() {
-		//System.out.println("In the checking puzzle method.");
 		Iterator<Puzzle> pIter = Puzzles.iterator();
 		while(pIter.hasNext()) {
 			Puzzle X = pIter.next();
-			if(X.getroomNum() == usrLOC && X.getCompletion() == false) {
+			if(X.getroomNum() == Player.currPlayerLocation() && X.getCompletion() == false) {
 				playPuzzle(X);
 			}
 		}
@@ -206,7 +121,7 @@ public class Game {
 		Boolean corrAns = false;
 		int attempts = X.getAttempts();
 		while(corrAns == false && attempts != 0) {
-		String Answer = UserCLI.puzzle();
+		String Answer = View.puzzle();
 		if(Answer.toLowerCase().contains(X.getAnswer().toLowerCase())) {
 			X.markComplete();
 			corrAns = true;
@@ -219,7 +134,65 @@ public class Game {
 		}
 		}
 		System.out.println("You have failed to solve the puzzle,\ncome back later.");
-		Player.updatePlayerLocation(usrLOC - 1);
-		gps();
+		Player.updatePlayerLocation(Player.currPlayerLocation() - 1);
+	}
+	public static Boolean checkForMobs() {
+		Boolean mobPresent = !Area.get(Player.currPlayerLocation()).Mobs.isEmpty();
+		System.out.println("Is the array empty?" + !mobPresent);
+		return mobPresent;
+	}
+	public static void Combat() {
+		ArrayList<Monster> MobsList = Area.get(Player.currPlayerLocation()).Mobs;
+		fight = new Combat(MobsList);
+		//boolean fightOver = false;
+		//Made this global for now.
+		System.out.println("List of Mobs");
+		newView.setView(4);
+		newView.draw();
+		Controller.singleStepParse(3);
+		Area.get(Player.currPlayerLocation()).visit();
+		newView.setView(5);
+		while(!fightOver) {
+			//System.out.println("List of Mobs");
+			newView.draw();
+			Controller.singleStepParse(3);
+			if(fight.requestStop()) {
+				fightOver = true;
+				skipFight();
+				//System.out.println("After Calling Skip Fight");
+				return;
+			}
+			//System.out.println("End of combat while Loop");
+		}
+		//System.out.println("Before Combat Return");
+	}
+	public static Combat getCombatOBJ() {
+		return fight;
+	}
+	public static void skipFight() {
+		skipFight = true;
+	}
+	public static void Fight(Combat S, String target) {
+		S.setMobBeingAttacked(target);
+		newView.setView(6);
+		Boolean isComplete = false;
+		while(!isComplete) {
+			newView.draw();
+			Controller.singleStepParse(4);
+			S.damage();
+			if(S.getMobHP() <= 0) {
+				newView.setView(7);
+				newView.draw();
+				S.ignore();
+				isComplete = true;
+				return;
+			}
+			if(Player.getCurrHP() <= 0) {
+				isComplete = true;
+				newView.setView(8);
+				newView.draw();
+				Controller.singleStepParse(0);
+			}
+		}
 	}
 }
