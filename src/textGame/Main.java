@@ -22,11 +22,11 @@ public class Main {
 		FileIO.readPuzzle();
 		Consumable x = new Consumable("testconsume", "Apple", "Small apple doesnt add much but better then nothing.",5);
 		Player.playInv.addToInv(x);
-		Weapon Y = new Weapon("testWeapon","Gun","Small Gun a bit powerful",100);
+		Weapon Y = new Weapon("testWeapon","Gun","Small Gun a bit powerful",25);
 		Player.playInv.addToInv(Y);
 		Monster Z = new Monster(1,"Zombie","Decrepit Zombie","Your not sure who it was, but now it's a zombie",100,10);
 		System.out.println(Z.getDescription());
-		Game.Area.get(1).addMob(Z);
+		Game.Area.get(2).addMob(Z);
 		
 		/*
 		 * After this line is where debug, or testing lines occur.

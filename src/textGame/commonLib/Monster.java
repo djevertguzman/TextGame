@@ -14,6 +14,9 @@ public class Monster extends Entity{
 	public void setTotalHP(int totalHP) {
 		this.totalHP = totalHP;
 	}
+	public void reduceHP(int redHP) {
+		this.totalHP -= redHP;
+	}
 	public int getMaxAttack() {
 		return maxAttack;
 	}

@@ -1,7 +1,6 @@
 package userInterface;
 
 import java.util.Scanner;
-
 import textGame.Combat;
 import textGame.Game;
 import textGame.Player;
@@ -17,7 +16,10 @@ public class Controller {
 			NavigationParse(usrString);
 		}
 		else if(context == 3) {
-			CombatParse(usrString);
+			CombatFirstParse(usrString);
+		}
+		else if(context == 4) {
+			CombatFightParse(usrString);
 		}
 	}
 	public static void NavigationParse(String usrString) {
@@ -160,7 +162,7 @@ public class Controller {
 		}
 		
 	}
-	public static void CombatParse(String usrString) {
+	public static void CombatFirstParse(String usrString) {
 		Combat currFight = Game.getCombatOBJ();
 		usrString = usrString.toLowerCase();
 		String commandSplit[] = usrString.split(" ");
@@ -173,7 +175,7 @@ public class Controller {
 			if(commandSplit.length == 1) {
 				System.out.println("Command argument required: Try Again");
 			}else {
-				System.out.println("Not Implemented");
+				Game.Fight(currFight,commandSplit[1]);
 			}
 			break;
 		//case "skip":
@@ -182,6 +184,54 @@ public class Controller {
 		case "ignore":
 			currFight.ignore();
 			break;
+		default:
+			System.out.println("Invalid option entered, try again.");
+			System.out.println("Only avaible options are examine, attack, ignore.");
+		break;
+	}
+	}
+	public static void CombatFightParse(String usrString) {
+		Combat currFight = Game.getCombatOBJ();
+		usrString = usrString.toLowerCase();
+		String commandSplit[] = usrString.split(" ");
+		switch(commandSplit[0]){
+		case "inventory":
+			Player.playerInv();
+			break;
+		case "inspect":
+			if(commandSplit.length == 1) {
+				System.out.println("Command argument required: Try Again");
+			}else {
+				Player.itemInspect(commandSplit[1]);
+			}
+			break;
+		case "equip":
+			if(commandSplit.length == 1) {
+				System.out.println("Command argument required: Try Again");
+			}else {
+				Player.equipItem(commandSplit[1]);
+			}
+			break;
+		case "unequip":
+			Player.unequipItem();
+			break;
+		case "checkequip":
+			Player.checkequip();
+			break;
+		case "heal":
+			if(commandSplit.length == 1) {
+				System.out.println("Command argument required: Try Again");
+			}else {
+				Player.itemHeal(commandSplit[1]);
+			}
+			break;
+		case "attack":
+			currFight.attack();
+			break;
+		default:
+			System.out.println("Invalid option entered, try again.");
+		break;
+		
 		}
 	}
 }

@@ -36,11 +36,11 @@ public class Game {
 		while(true) {
 			checkForPuzzle();
 			if(!skipFight) {
-				System.out.println("Loop 1");
+				//System.out.println("Loop 1");
 				if(checkForMobs()) {
-					System.out.println("Loop 2");
+					//System.out.println("Loop 2");
 					Combat();
-					System.out.println("After Combat Returns");
+					//System.out.println("After Combat Returns");
 				}
 			}
 				//String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
@@ -153,23 +153,46 @@ public class Game {
 		Area.get(Player.currPlayerLocation()).visit();
 		newView.setView(5);
 		while(!fightOver) {
-			System.out.println("List of Mobs");
+			//System.out.println("List of Mobs");
 			newView.draw();
 			Controller.singleStepParse(3);
 			if(fight.requestStop()) {
 				fightOver = true;
 				skipFight();
-				System.out.println("After Calling Skip Fight");
+				//System.out.println("After Calling Skip Fight");
 				return;
 			}
-			System.out.println("End of combat while Loop");
+			//System.out.println("End of combat while Loop");
 		}
-		System.out.println("Before Combat Return");
+		//System.out.println("Before Combat Return");
 	}
 	public static Combat getCombatOBJ() {
 		return fight;
 	}
 	public static void skipFight() {
 		skipFight = true;
+	}
+	public static void Fight(Combat S, String target) {
+		S.setMobBeingAttacked(target);
+		newView.setView(6);
+		Boolean isComplete = false;
+		while(!isComplete) {
+			newView.draw();
+			Controller.singleStepParse(4);
+			S.damage();
+			if(S.getMobHP() <= 0) {
+				newView.setView(7);
+				newView.draw();
+				S.ignore();
+				isComplete = true;
+				return;
+			}
+			if(Player.getCurrHP() <= 0) {
+				isComplete = true;
+				newView.setView(8);
+				newView.draw();
+				Controller.singleStepParse(0);
+			}
+		}
 	}
 }

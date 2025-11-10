@@ -2,6 +2,7 @@ package userInterface;
 
 import java.util.ArrayList;
 
+import textGame.Combat;
 import textGame.Game;
 import textGame.Player;
 import textGame.Room;
@@ -29,6 +30,15 @@ public class newView {
 		}
 		else if(currView == 5) {
 			CombatMain();
+		}
+		else if(currView == 6) {
+			CombatFight();
+		}
+		else if(currView == 7) {
+			CombatWin();
+		}
+		else if(currView == 8) {
+			CombatLoss();
 		}
 	}
 	public static void setView(int X) {
@@ -107,8 +117,34 @@ public class newView {
 		String currRm = rmList.get(usrLoc).getRoomName();
 		System.out.println("------------------------Monster----------------------------");
 		System.out.println("There are " + rmList.get(usrLoc).getMobCount() + " Monsters left in " + currRm + ".");
+		if(!message.equals("")) {
 		System.out.println(message);
+		}
 		message = "";
+	}
+	public static void CombatFight() {
+		int usrLoc = Player.currPlayerLocation();
+		String currRm = rmList.get(usrLoc).getRoomName();
+		Combat currFight = Game.getCombatOBJ();
+		int playHP = Player.getCurrHP();
+		int mobHP = currFight.getMobHP();
+		System.out.println("------------------------Fight!!!----------------------------");
+		System.out.println("Player HP:" + playHP + "/100 ---------- Monster HP: " + mobHP + "/100" );
+		if(!message.equals("")) {
+		System.out.println(message);
+		}
+		message = "";
+	}
+	public static void CombatWin() {
+		System.out.println("------------------------Win!!!----------------------------");
+		System.out.println("You have sucessfully defeated the monster!");
+		
+	}
+	public static void CombatLoss() {
+		System.out.println("------------------------Loss!!!----------------------------");
+		System.out.println("You gave it a good try but were killed,");
+		System.out.println("By the monster. Better Luck Next Time");
+		System.out.println("Do you want to exit, or start a new game ?");
 	}
 	public static void setCombatMessage(String currMessage) {
 		message = currMessage;
