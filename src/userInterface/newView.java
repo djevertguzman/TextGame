@@ -9,6 +9,7 @@ import textGame.Room;
 public class newView {
 	static ArrayList<Room> rmList = Game.getRoomList();
 	static int currView = 0;
+	static String message;
 	public static void draw() {
 		if(currView == 0) {
 			MainMenu();
@@ -24,7 +25,10 @@ public class newView {
 			exploreList(false, null);
 		}
 		else if(currView == 4) {
-			Combat();
+			CombatIntro();
+		}
+		else if(currView == 5) {
+			CombatMain();
 		}
 	}
 	public static void setView(int X) {
@@ -91,7 +95,22 @@ public class newView {
 			System.out.println("This room is empty");
 		}
 	}
-	public static void Combat() {
-		System.out.println("In Combat UI. New View");
+	public static void CombatIntro() {
+		int usrLoc = Player.currPlayerLocation();
+		String currRm = rmList.get(usrLoc).getRoomName();
+		System.out.println("------------------------Monster----------------------------");
+		System.out.println("There is " + rmList.get(usrLoc).getMobCount() + " Monsters Present in " + currRm + ".");
+		System.out.println("Run the examine command to discover them.");
+	}
+	public static void CombatMain() {
+		int usrLoc = Player.currPlayerLocation();
+		String currRm = rmList.get(usrLoc).getRoomName();
+		System.out.println("------------------------Monster----------------------------");
+		System.out.println("There are " + rmList.get(usrLoc).getMobCount() + " Monsters left in " + currRm + ".");
+		System.out.println(message);
+		message = "";
+	}
+	public static void setCombatMessage(String currMessage) {
+		message = currMessage;
 	}
 }

@@ -12,6 +12,9 @@ import java.util.Iterator;
 public class Game {
 	static ArrayList<Room> Area = new ArrayList<Room>();
 	static ArrayList<Puzzle> Puzzles = new ArrayList<Puzzle>();
+	static Combat fight;
+	static boolean skipFight = false;
+	static boolean fightOver = false;
 	
 	public static void addRoom(Room x) {
 		Area.add(x);
@@ -32,23 +35,21 @@ public class Game {
 	private static void game() {
 		while(true) {
 			checkForPuzzle();
-			if(checkForMobs()) {
-				//String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
-				//String usrCommand = View.CombatCLI();
-				//View.CombatCLI();
-				//Controller.parseUSRInput(usrCommand);
-				//Controller.singleStepParse(usrCommand);
-				newView.setView(4);
-				newView.draw();
-				Controller.singleStepParse(3);
-				Area.get(Player.currPlayerLocation()).visit();
+			if(!skipFight) {
+				System.out.println("Loop 1");
+				if(checkForMobs()) {
+					System.out.println("Loop 2");
+					Combat();
+					System.out.println("After Combat Returns");
+				}
 			}
-			else {
 				//String usrCommand = View.navigationCLI(Player.currPlayerLocation(),Area.get(Player.currPlayerLocation()).getRoomName(), Area.get(Player.currPlayerLocation()).hasVisited(),Area.get(Player.currPlayerLocation()).description);
 				//Controller.parseUSRInput(usrCommand);
+				skipFight = false;
+				newView.setView(1);
+				newView.draw();
 				Controller.singleStepParse(1);
 				Area.get(Player.currPlayerLocation()).visit();
-			}
 			}
 		}
 	public static ArrayList<Room> getRoomList(){
@@ -141,12 +142,34 @@ public class Game {
 		return mobPresent;
 	}
 	public static void Combat() {
-		ArrayList<Entity> MobsList = Area.get(Player.currPlayerLocation()).Mobs;
-		Iterator<Entity> mobIter = MobsList.iterator();
+		ArrayList<Monster> MobsList = Area.get(Player.currPlayerLocation()).Mobs;
+		fight = new Combat(MobsList);
+		//boolean fightOver = false;
+		//Made this global for now.
 		System.out.println("List of Mobs");
-		while(mobIter.hasNext()) {
-			Entity X = mobIter.next();
-			System.out.println("Mob: " + X.getName());
+		newView.setView(4);
+		newView.draw();
+		Controller.singleStepParse(3);
+		Area.get(Player.currPlayerLocation()).visit();
+		newView.setView(5);
+		while(!fightOver) {
+			System.out.println("List of Mobs");
+			newView.draw();
+			Controller.singleStepParse(3);
+			if(fight.requestStop()) {
+				fightOver = true;
+				skipFight();
+				System.out.println("After Calling Skip Fight");
+				return;
+			}
+			System.out.println("End of combat while Loop");
 		}
+		System.out.println("Before Combat Return");
+	}
+	public static Combat getCombatOBJ() {
+		return fight;
+	}
+	public static void skipFight() {
+		skipFight = true;
 	}
 }

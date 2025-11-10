@@ -2,6 +2,7 @@ package userInterface;
 
 import java.util.Scanner;
 
+import textGame.Combat;
 import textGame.Game;
 import textGame.Player;
 
@@ -160,11 +161,13 @@ public class Controller {
 		
 	}
 	public static void CombatParse(String usrString) {
+		Combat currFight = Game.getCombatOBJ();
 		usrString = usrString.toLowerCase();
 		String commandSplit[] = usrString.split(" ");
 		switch(commandSplit[0]){
 		case "examine":
-				System.out.println("Not Implemented");
+				System.out.println("In progress - Controller");
+				newView.setCombatMessage(currFight.examine());
 			break;
 		case "attack":
 			if(commandSplit.length == 1) {
@@ -173,12 +176,11 @@ public class Controller {
 				System.out.println("Not Implemented");
 			}
 			break;
+		//case "skip":
+			//Game.skipFight();
+			//break;
 		case "ignore":
-			if(commandSplit.length == 1) {
-				System.out.println("Command argument required: Try Again");
-			}else {
-				System.out.println("Not Implemented");
-			}
+			currFight.ignore();
 			break;
 		}
 	}

@@ -25,6 +25,7 @@ public class Main {
 		Weapon Y = new Weapon("testWeapon","Gun","Small Gun a bit powerful",100);
 		Player.playInv.addToInv(Y);
 		Monster Z = new Monster(1,"Zombie","Decrepit Zombie","Your not sure who it was, but now it's a zombie",100,10);
+		System.out.println(Z.getDescription());
 		Game.Area.get(1).addMob(Z);
 		
 		/*

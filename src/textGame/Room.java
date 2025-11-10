@@ -11,7 +11,7 @@ public class Room {
 	boolean visited = false;
 	int N,E,S,W = 0;
 	Inventory rmInv;
-	ArrayList<Entity> Mobs = new ArrayList<Entity>();
+	ArrayList<Monster> Mobs = new ArrayList<Monster>();
 	//Map<String, Integer> exits;
 	public Room(int roomNumber, String name, String description, int N, int E, int S, int W) {
 		this.roomNumber = roomNumber;
@@ -41,6 +41,9 @@ public class Room {
 	}
 	public void addMob(Monster X) {
 		Mobs.add(X);
+	}
+	public int getMobCount() {
+		return Mobs.size();
 	}
 	
 }

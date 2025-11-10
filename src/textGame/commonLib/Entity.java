@@ -9,6 +9,7 @@ public class Entity {
 		this.ID = ID;
 		this.Type = Type;
 		this.Name = Name;
+		this.Description = Description;
 	}
 	public int getID() {
 		return ID;
